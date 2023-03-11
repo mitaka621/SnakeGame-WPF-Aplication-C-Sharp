@@ -11,6 +11,7 @@
         FontFamily="{StaticResource MainFont}"
         WindowStartupLocation="CenterScreen"
         Icon="Assets/icon.ico"
+        KeyDown="Window_KeyDown"
         >
     <Grid>
         <Grid.RowDefinitions>
