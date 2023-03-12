@@ -9,6 +9,7 @@ namespace Snake_Game.GameLogic.FoodGeneration
     public class GenerateFood
     {
         Random r;
+
         public GenerateFood(int row, int col)
         {
             r = new Random();

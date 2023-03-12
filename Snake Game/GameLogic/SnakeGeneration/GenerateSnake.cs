@@ -10,15 +10,13 @@ namespace Snake_Game.Logic
 {
     public class GenerateSnake
     {
-        public readonly LinkedList<Position> snake;
+        private readonly LinkedList<Position> snake;
         
         public GenerateSnake(int row, int col)
         {
             snake = new LinkedList<Position>(new List<Position>()
             {
-                new Position(row/2,6),
-                new Position(row/2,5),
-                 new Position(row/2,4),
+               
                 new Position(row/2,3),                   
                 new Position(row/2,2),
                 new Position(row/2,1)
@@ -29,35 +27,24 @@ namespace Snake_Game.Logic
         private int Row { get;}
         private int Col { get; }
 
-        public LinkedList<Position> Move(DirectionState state)
+        public LinkedList<Position> GetSnake() => snake;
+        
+        public bool Move(DirectionState state,bool extend=false)
         {
-            //bug location
-            Position nextPosition = snake.First().Return();
+            Position nextPosition = snake.First().Return().MoveNext(state);
             
-            snake.RemoveLast();
-            
-            switch (state)
-            {
-                case DirectionState.Up:                 
-                    nextPosition.MoveUp();
-                    break;
-                case DirectionState.Down:
-                    nextPosition.MoveDown();
-                    break;
-                case DirectionState.Left:
-                    nextPosition.MoveLeft();
-                    break;
-                case DirectionState.Right:
-                    nextPosition.MoveRight();
-                    break;               
-            }
             if (IsPositionValid(nextPosition))
+            {
+                if (!extend)
+                    snake.RemoveLast();
                 snake.AddFirst(nextPosition);
-            else
-                throw new ArgumentException("Game Over");
-            return snake;
+               
+                return true;
+            }
+            
+            return false;
         }
-
+        
         private bool IsPositionValid(Position pos)=>
             pos.Row>=0&&
             pos.Col>=0&&

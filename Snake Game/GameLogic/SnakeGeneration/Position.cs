@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake_Game.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,19 +21,40 @@ namespace Snake_Game.Logic
         {
             return new Position(Row, Col);
         }
-        public void MoveUp()
+        public Position MoveNext(DirectionState direction)
+        {
+            
+            switch (direction)
+            {
+                case DirectionState.Up:
+                    MoveUp();
+                    break;
+                case DirectionState.Down:
+                    MoveDown();
+                    break;
+                case DirectionState.Left:
+                    MoveLeft();
+                    break;
+                case DirectionState.Right:
+                    MoveRight();
+                    break;
+            }
+            return new Position(Row,Col);
+        }
+       
+        private void MoveUp()
         {
             Row--;
         }
-        public void MoveDown()
+        private void MoveDown()
         {
             Row++;
         }
-        public void MoveRight()
+        private void MoveRight()
         {
             Col++;  
         }
-        public void MoveLeft()
+        private void MoveLeft()
         {
             Col--;
         }

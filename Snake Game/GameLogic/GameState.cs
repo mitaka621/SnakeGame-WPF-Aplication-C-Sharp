@@ -12,49 +12,99 @@ namespace Snake_Game.GameLogic
     public class GameState
     {
         GridState[,] arr;
-        GenerateSnake generate;
+        DirectionState lastDirection = DirectionState.Right;
+        GenerateSnake snake;
         GenerateFood food;
-        LinkedList<Position> snake;
+
+        bool gameRunning = true;
+        bool shouldExtend;
         public GameState(int row, int col)
         {
             arr = new GridState[row, col];
-            generate = new GenerateSnake(row, col);
-            snake = generate.snake;
-            food=new GenerateFood(row, col);
-            Row= row;
-            Col= col;
-            
-        }
-        public int Row { get;  }
-        public int Col { get; }
+            snake = new GenerateSnake(row, col);
 
+            food = new GenerateFood(row, col);
+            Row = row;
+            Col = col;
+            Score = 0;
+        }
+        public int Row { get; }
+        public int Col { get; }
+        public int Score { get; private set; }
         public GridState[,] GetState()
         {
-            arr=new GridState[Row, Col];
-            DrawSnake();
-            DrawFood();
+            arr = new GridState[Row, Col];
+            DrawSnakeInInternalArr();
+            DrawFoodInInternalArr();
             return arr;
         }
-        public void MoveSnake(DirectionState direction)
+        public LinkedList<Position> GetSnake()
         {
-            snake = generate.Move(direction);
+            return snake.GetSnake();
         }
-        private void DrawSnake()
+
+        public bool IsDirectionValid(DirectionState lastDirection, DirectionState newDirection)
+        => (lastDirection == DirectionState.Left && newDirection == DirectionState.Right)
+         || (lastDirection == DirectionState.Right && newDirection == DirectionState.Left)
+         || (lastDirection == DirectionState.Up && newDirection == DirectionState.Down)
+         || (lastDirection == DirectionState.Down && newDirection == DirectionState.Up);
+
+
+
+        public bool MoveSnake(DirectionState direction)
         {
-            
-            foreach (var item in snake)
+            if (IsDirectionValid(lastDirection, direction))
+                direction = lastDirection;
+            else
+                lastDirection = direction;
+
+            if (!snake.Move(direction, shouldExtend))
+                gameRunning = false;
+            Position head = snake.GetSnake().First();
+            switch (arr[head.Row, head.Col])
+            {
+                case GridState.Food:
+                    EatFood(snake.GetSnake().First());
+                    shouldExtend=true;
+                    break;
+                case GridState.Snake:
+                    gameRunning = false;
+                    break;
+                case GridState.Empty:
+                    shouldExtend = false;
+                    break;
+            }
+
+            return gameRunning;
+
+        }
+        private void EatFood(Position headPos)
+        {
+
+            arr[headPos.Row, headPos.Col] = GridState.Snake;
+            GenerateNewFood();
+            Score += 10;
+        }
+        private void DrawSnakeInInternalArr()
+        {
+
+            foreach (var item in snake.GetSnake())
             {
                 arr[item.Row, item.Col] = GridState.Snake;
             }
         }
-        private void DrawFood()
+        private void DrawFoodInInternalArr()
         {
-            arr[food.FoodRow,food.FoodCol]=GridState.Food;
+            arr[food.FoodRow, food.FoodCol] = GridState.Food;
         }
-       
+
         private void GenerateNewFood()
         {
             food.GenerateNewFood();
+            if (arr[food.FoodRow, food.FoodCol] != GridState.Empty)
+            {
+                GenerateNewFood();
+            }
         }
     }
 }
