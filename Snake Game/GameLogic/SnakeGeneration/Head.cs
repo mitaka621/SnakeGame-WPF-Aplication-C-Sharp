@@ -1,15 +1,15 @@
-﻿using Snake_Game.Models;
+﻿using Snake_Game.GameLogic.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snake_Game.Logic
+namespace Snake_Game.GameLogic.Models
 {
-    public class Position
+    public class Head
     {
-        public Position(int row, int col)
+        public Head(int row, int col)
         {
             Row = row;
             Col = col;
@@ -17,13 +17,13 @@ namespace Snake_Game.Logic
 
         public int Row { get; private set; }
         public int Col { get; set; }
-        public Position Return()
+        public Head Return()
         {
-            return new Position(Row, Col);
+            return new Head(Row, Col);
         }
-        public Position MoveNext(DirectionState direction)
+        public Head MoveNext(DirectionState direction)
         {
-            
+
             switch (direction)
             {
                 case DirectionState.Up:
@@ -39,9 +39,9 @@ namespace Snake_Game.Logic
                     MoveRight();
                     break;
             }
-            return new Position(Row,Col);
+            return new Head(Row, Col);
         }
-       
+
         private void MoveUp()
         {
             Row--;
@@ -52,7 +52,7 @@ namespace Snake_Game.Logic
         }
         private void MoveRight()
         {
-            Col++;  
+            Col++;
         }
         private void MoveLeft()
         {

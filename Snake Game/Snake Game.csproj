@@ -20,18 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Body.png" />
-    <Resource Include="Assets\DeadBody.png" />
-    <Resource Include="Assets\DeadHead.png" />
-    <Resource Include="Assets\DroidSansMono.ttf" />
-    <Resource Include="Assets\Empty.png" />
-    <Resource Include="Assets\Food.png" />
-    <Resource Include="Assets\Head.png" />
-    <Resource Include="Assets\icon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SnakeGeneration\" />
+    <Resource Include="Assets\Resources\Body.png" />
+    <Resource Include="Assets\Resources\DeadBody.png" />
+    <Resource Include="Assets\Resources\DeadHead.png" />
+    <Resource Include="Assets\Resources\DroidSansMono.ttf" />
+    <Resource Include="Assets\Resources\Empty.png" />
+    <Resource Include="Assets\Resources\Food.png" />
+    <Resource Include="Assets\Resources\Head.png" />
+    <Resource Include="Assets\Resources\icon.ico" />
   </ItemGroup>
 
 </Project>

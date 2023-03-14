@@ -16,9 +16,10 @@ namespace Snake_Game.Models
         public static readonly ImageSource Food = LoadImage("Food.png");
         public static readonly ImageSource DeadBody = LoadImage("DeadBody.png");
         public static readonly ImageSource DeadHead = LoadImage("DeadHead.png");
+
         private static ImageSource LoadImage(string filename)
         {
-            return new BitmapImage(new Uri($"Assets/{filename}", UriKind.Relative));
+            return new BitmapImage(new Uri($"Assets/Resources/{filename}", UriKind.Relative));
         }
     }
 }

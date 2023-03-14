@@ -12,23 +12,34 @@
         Foreground="{StaticResource TextColor}"
         FontFamily="{StaticResource MainFont}"
         WindowStartupLocation="CenterScreen"
-        Icon="Assets/icon.ico"
+        Icon="Assets/Resources/icon.ico"
         KeyDown="Window_KeyDown"
        PreviewKeyDown="Window_PreviewKeyDown"
         >
     <Viewbox>
         <Grid>
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="ScoreBlock"
-                   HorizontalAlignment="Center"
+                   Grid.Row="0"    
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Center"
                    Text="SCORE 0"
                    FontSize="22"
-                   Margin="10"/>
+                   Margin="20,10,0,0"/>
+            
+            <TextBlock x:Name="TimeBlock"
+                   Grid.Row="0"    
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Text="00:00:00:000
+"
+                   FontSize="22"
+                   Margin="0,10,10,0"/>
 
             <Border x:Name="GridBoarder"
                 Grid.Row="1"
@@ -40,6 +51,7 @@
                 RenderOptions.EdgeMode="Aliased">
 
                 <UniformGrid x:Name="GameGrid"
+                             x:FieldModifier="public"
                          Width="400"
                          Height="400"
                          Background="{StaticResource GridBackgroundColor}"

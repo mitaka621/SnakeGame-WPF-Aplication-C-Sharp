@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snake_Game.Models
+namespace Snake_Game.Core.Interfaces
 {
-    public enum DirectionState
+    public interface IEngine
     {
-        Up,
-        Down,
-        Left,
-        Right
+        void Run();
     }
 }

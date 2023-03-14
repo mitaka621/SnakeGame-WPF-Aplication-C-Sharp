@@ -1,4 +1,5 @@
 ﻿using Snake_Game.GameLogic;
+using Snake_Game.GameLogic.Enums;
 using Snake_Game.Logic;
 using Snake_Game.Models;
 using System;
@@ -21,6 +22,8 @@ namespace Snake_Game
         private const int rows = 15, cols = 15;
         private Image[,] gridImages;
         GameState gamestate = new GameState(rows, cols);
+        TimeOnly gametime;
+        TimeSpan timespan= new TimeSpan(0, 0, 0, 0, 100);
         DirectionState direction = DirectionState.Right;
         bool gameRunning;
         Dictionary<GridState, ImageSource> states = new Dictionary<GridState, ImageSource>()
@@ -37,9 +40,33 @@ namespace Snake_Game
             gridImages = SetUpGrid();
             DrawEmptyGrid();
 
-
+            
             //gridImages[1, 2].Source = Images.Food;
 
+        }
+        private void StartGame()
+        {
+            clock.Start();
+            gametime= new TimeOnly();
+            ScoreBlock.Text = "SCORE 0";
+            clock.Interval = timespan;
+            clock.Tick += new EventHandler(TickEvent);
+        }
+
+        private async Task EndGame()
+        {
+            clock.Stop();
+            clock.Tick -= new EventHandler(TickEvent);
+
+            direction = DirectionState.Right;
+            
+            await DrawDeadSnake();
+            gamestate = new GameState(rows, cols);
+
+            await Task.Delay(2000);
+            gameRunning = false;
+            DrawEmptyGrid();
+            Overlay.Visibility = Visibility.Visible;
         }
         private void DrawEmptyGrid()
         {
@@ -116,28 +143,7 @@ namespace Snake_Game
         }
 
 
-        private void StartGame()
-        {
-            clock.Start();
-            clock.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            clock.Tick += new EventHandler(TickEvent);
-        }
-
-        private async Task EndGame()
-        {
-            clock.Stop();
-            clock.Tick -= new EventHandler(TickEvent);
-            
-            direction = DirectionState.Right;
-            ScoreBlock.Text = "SCORE 0";
-            await DrawDeadSnake();
-            gamestate = new GameState(rows, cols);
-
-            await Task.Delay(2000);
-            gameRunning = false;
-            DrawEmptyGrid();
-            Overlay.Visibility = Visibility.Visible;
-        }
+        
 
         private async void TickEvent(object sender, EventArgs e)
         {
@@ -150,17 +156,30 @@ namespace Snake_Game
             else
             {
                 ScoreBlock.Text = "SCORE " + gamestate.Score.ToString();
+                gametime=gametime.Add(timespan);
+                TimeBlock.Text=String.Format("{0:00}:{1:00}:{2:00}:{3:000}", gametime.Hour, gametime.Minute, gametime.Second, gametime.Millisecond);
                 Draw();
             }
         }
-
-        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        
+        public async Task CountDown(int countdown = 3)
+        {
+            for (int i = countdown; i >0; i--)
+            {
+                OverlayText.Text = countdown--.ToString();
+                await Task.Delay(500);
+            }
+           
+            
+        }
+        private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (!gameRunning)
             {
-               
+               Draw();
+               await CountDown();
                 Overlay.Visibility = Visibility.Hidden;
-
+                OverlayText.Text = "PRESS ANY KEY TO START";
                 gameRunning = true;
                 StartGame();
             }
