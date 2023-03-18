@@ -4,7 +4,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Snake_Game</RootNamespace>
-    <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
@@ -17,17 +16,31 @@
     <None Remove="Assets\Food.png" />
     <None Remove="Assets\Head.png" />
     <None Remove="Assets\icon.ico" />
+    <None Remove="Assets\Resources\wasd.png" />
+    <None Remove="Assets\Resources\winky.gif" />
+    <None Remove="Assets\UIElements\LargeGameGrid.png" />
+    <None Remove="Assets\UIElements\MediumGameGrid.png" />
+    <None Remove="Assets\UIElements\SmallGameGrid.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets\Resources\Body.png" />
     <Resource Include="Assets\Resources\DeadBody.png" />
     <Resource Include="Assets\Resources\DeadHead.png" />
-    <Resource Include="Assets\Resources\DroidSansMono.ttf" />
+    <Resource Include="Assets\UIElements\DroidSansMono.ttf" />
     <Resource Include="Assets\Resources\Empty.png" />
     <Resource Include="Assets\Resources\Food.png" />
     <Resource Include="Assets\Resources\Head.png" />
     <Resource Include="Assets\Resources\icon.ico" />
+    <Resource Include="Assets\Resources\wasd.png" />
+    <Resource Include="Assets\UIElements\LargeGameGrid.png" />
+    <Resource Include="Assets\UIElements\MediumGameGrid.png" />
+    <Resource Include="Assets\UIElements\SmallGameGrid.png" />
+    <Resource Include="Assets\UIElements\winky.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="XamlAnimatedGif" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

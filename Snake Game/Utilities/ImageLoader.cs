@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace Snake_Game.Models
 {
-    public static class Images
+    public static class ImageLoader
     {
         public static readonly ImageSource Empty = LoadImage("Empty.png");
         public static readonly ImageSource Body = LoadImage("Body.png");

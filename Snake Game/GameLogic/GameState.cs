@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Snake_Game.GameLogic
 {
+    
     public class GameState:Snake
     {
         GridState[,] arr;
@@ -26,7 +27,7 @@ namespace Snake_Game.GameLogic
             food = new GenerateFood(GridRows, GridCols);
             Score = 0;
         }
-              
+        public DirectionState LastDirection { get=>lastDirection; }
         public int Score { get; private set; }
         public GridState[,] GetState()
         {

@@ -9,6 +9,6 @@
         <SolidColorBrush x:Key="GridLineColor" Color="#4f4867"></SolidColorBrush>
         <SolidColorBrush x:Key="TextColor" Color="#EBEBEB"></SolidColorBrush>
         <SolidColorBrush x:Key="OverlayCOloor" Color="#7F000000"></SolidColorBrush>
-        <FontFamily x:Key="MainFont">Assets/#Droid Sans Mono</FontFamily>
+        <FontFamily x:Key="MainFont">Assets/UIElements/#Droid Sans Mono</FontFamily>
     </Application.Resources>
 </Application>
