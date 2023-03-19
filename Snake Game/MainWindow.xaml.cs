@@ -25,31 +25,19 @@ namespace Snake_Game
         DirectionState direction = DirectionState.Right;
         IEngine engine;
         TimeSpan gamespeed;
+        GameDifficulty gameDifficulty;
         int rows = 0, cols = 0;
+
         public MainWindow()
         {
             InitializeComponent();
-            
-            //gridImages[1, 2].Source = Images.Food;
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (OverlayText.Text == "PRESS ANY KEY TO START" && Overlay.Visibility == Visibility.Visible&& StartMenu.Visibility == Visibility.Hidden)
-            {
+            if (OverlayText.Text == "PRESS ANY KEY TO START" && Overlay.Visibility == Visibility.Visible&& StartMenu.Visibility == Visibility.Hidden)    
+                
                 engine.StartGame();
-               
-            }
-            //if (!gameRunning)
-            //{
-            //   Draw();
-            //   await CountDown();
-            //    Overlay.Visibility = Visibility.Hidden;
-            //    OverlayText.Text = "PRESS ANY KEY TO START";
-            //    gameRunning = true;
-            //    StartGame();
-            //}
-
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -81,7 +69,7 @@ namespace Snake_Game
 
         void StartGame()
         {
-            engine = new Engine(rows, cols, gamespeed);
+            engine = new Engine(rows, cols, gamespeed,gameDifficulty);
             StartMenu.Visibility = Visibility.Hidden;
         }
 
@@ -116,17 +104,20 @@ namespace Snake_Game
 
         private void EasyDifficultyButton_Click(object sender, RoutedEventArgs e)
         {
+            gameDifficulty = GameDifficulty.easy;
             StartGame();
         }
 
         private void MediumDifficultyButton_Click(object sender, RoutedEventArgs e)
         {
+            gameDifficulty = GameDifficulty.medium;
             gamespeed *=0.66;
             StartGame();
         }
 
         private void HardDifficultyButton_Click(object sender, RoutedEventArgs e)
         {
+            gameDifficulty = GameDifficulty.hard;
             gamespeed *=0.53;
             StartGame();
         }

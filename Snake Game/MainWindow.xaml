@@ -58,7 +58,6 @@
                    Margin="0,10,0,0"/>
             </Border>
 
-
             <TextBlock 
                    Text="Current Game:"
                        Grid.Column="1"
@@ -77,6 +76,39 @@
                    FontSize="22"
                    Margin="0,87,0,0" Height="26" Width="124"/>
 
+            <Border x:Name="HighestScoreBorder"
+                Grid.Column="1"
+                Margin="40,313,41,209"
+                BorderThickness="5"
+                    >
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform x:Name="rotateHighScoreBorder" Angle="100" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#FFBDC70C" Offset="0.178"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+
+
+                <TextBlock x:Name="HighestScore"
+                      
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                           
+                    Text="SCORE 0"
+                    FontSize="22"
+                    Height="26" 
+                    Width="auto" 
+                    Margin="0,10,0,0"/>
+            </Border>
+            
             <Border x:Name="LastGameBorder"
                     Grid.Column="1"
                      Margin="40,179,41,343"
@@ -88,7 +120,7 @@
                             <TransformGroup>
                                 <ScaleTransform CenterY="0.5" CenterX="0.5"/>
                                 <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                <RotateTransform Angle="115.201" CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform x:Name="LastScoreBorderRotate" Angle="100" CenterX="0.5" CenterY="0.5"/>
                                 <TranslateTransform/>
                             </TransformGroup>
                         </LinearGradientBrush.RelativeTransform>
@@ -165,38 +197,8 @@
 
 
             </Border>
-            <Border x:Name="HighestScoreBorder"
-                Grid.Column="1"
-                Margin="40,313,41,209"
-                BorderThickness="5"
-                    >
-                <Border.BorderBrush>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                <RotateTransform x:Name="rotateBorder2" Angle="115.201" CenterX="0.5" CenterY="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFFDF4DC" Offset="0"/>
-                        <GradientStop Color="#FFFFD200" Offset="0.283"/>
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
-
-
-                <TextBlock x:Name="HighestScore"
-                      
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                           
-                    Text="SCORE 0"
-                    FontSize="22"
-                    Height="26" 
-                    Width="auto" 
-                    Margin="0,10,0,0"/>
-            </Border>
+            
+                
             <TextBlock x:Name="HigestScoreTime"
                 Grid.Row="0"
                 Grid.Column="1"
