@@ -87,7 +87,7 @@ namespace Snake_Game
         {
             rows = 30;
             cols = 36;
-            gamespeed = new TimeSpan(0, 0, 0, 0, 100);
+            gamespeed = new TimeSpan(0, 0, 0, 0, 120);
             ChooseGridSize.Visibility = Visibility.Hidden;
             ChooseDificulty.Visibility = Visibility.Visible;
            
@@ -96,7 +96,7 @@ namespace Snake_Game
         {
             rows = 75;
             cols = 90;
-            gamespeed = new TimeSpan(0, 0, 0, 0, 65);
+            gamespeed = new TimeSpan(0, 0, 0, 0, 50);
             ChooseGridSize.Visibility = Visibility.Hidden;
             ChooseDificulty.Visibility = Visibility.Visible;
             
@@ -111,14 +111,20 @@ namespace Snake_Game
         private void MediumDifficultyButton_Click(object sender, RoutedEventArgs e)
         {
             gameDifficulty = GameDifficulty.medium;
-            gamespeed *=0.66;
+            gamespeed *=0.75;
             StartGame();
+        }
+
+        private void MediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            intro.Position = TimeSpan.FromMilliseconds(1);
+
         }
 
         private void HardDifficultyButton_Click(object sender, RoutedEventArgs e)
         {
             gameDifficulty = GameDifficulty.hard;
-            gamespeed *=0.53;
+            gamespeed *=0.60;
             StartGame();
         }
 

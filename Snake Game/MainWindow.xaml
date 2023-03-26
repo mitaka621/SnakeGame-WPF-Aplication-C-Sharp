@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         mc:Ignorable="d"
         Title="Snake" Height="400" Width="700"
         MinHeight="400" MinWidth="700"
-        WindowState="Maximized"
+       WindowState="Maximized"
         WindowStyle="None"
         Background="{StaticResource BackgroundColor}"
         Foreground="{StaticResource TextColor}"
@@ -18,18 +17,18 @@
        PreviewKeyDown="Window_PreviewKeyDown"
         >
     <Viewbox x:Name="viewbox">
-        <Grid>
+        <Grid >
 
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="348"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="33*"/>
             </Grid.ColumnDefinitions>
 
             <Border x:Name="CurrentGameBoarder"
                     Grid.Column="1"
-                     Margin="40,41,41,482"
-                    BorderThickness="5"
+                     Margin="12,100,69,858"
+                    BorderThickness="7,7,7,7"
                     >
                 <Border.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -52,34 +51,34 @@
                            VerticalAlignment="Top"
                            
                    Text="SCORE 0"
-                   FontSize="22"
-                   Height="26" 
+                   FontSize="36"
+                   Height="auto" 
                    Width="auto" 
-                   Margin="0,10,0,0"/>
+                   Margin="0,12,0,0"/>
             </Border>
 
             <TextBlock 
                    Text="Current Game:"
                        Grid.Column="1"
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    
-                   FontSize="22"
-                   Margin="0,10,0,0" Height="26" Width="171"/>
+                   FontSize="36"
+                   Margin="99,33,0,0" Height="auto" Width="auto"/>
 
             <TextBlock x:Name="TimeBlock"
                    Grid.Row="0"
                        Grid.Column="1"
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Text="00:00:000"
-                   FontSize="22"
-                   Margin="0,87,0,0" Height="26" Width="124"/>
+                   FontSize="36"
+                   Margin="135,170,0,0" Height="auto" Width="auto"/>
 
             <Border x:Name="HighestScoreBorder"
                 Grid.Column="1"
-                Margin="40,313,41,209"
-                BorderThickness="5"
+                Margin="12,515,68,451"
+                BorderThickness="7,7,7,7"
                     >
                 <Border.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -103,16 +102,16 @@
                     VerticalAlignment="Top"
                            
                     Text="SCORE 0"
-                    FontSize="22"
-                    Height="26" 
+                    FontSize="36"
+                    Height="41" 
                     Width="auto" 
                     Margin="0,10,0,0"/>
             </Border>
-            
+
             <Border x:Name="LastGameBorder"
                     Grid.Column="1"
-                     Margin="40,179,41,343"
-                    BorderThickness="5"
+                     Margin="12,311,69,654"
+                    BorderThickness="7,7,7,7"
                     >
                 <Border.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -136,60 +135,59 @@
                            VerticalAlignment="Top"
                            
                    Text="SCORE 0"
-                   FontSize="22"
-                   Height="26" 
+                   FontSize="36"
+                   Height="auto" 
                    Width="auto" 
                    Margin="0,10,0,0"/>
             </Border>
             <TextBlock x:Name="LastTimeBlock"
                    Grid.Row="0"
                        Grid.Column="1"
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Text="00:00:000"
-                   FontSize="22"
-                   Margin="0,223,0,0" Height="26" Width="126"/>
+                   FontSize="36"
+                   Margin="135,373,0,0" Height="auto" Width="auto"/>
             <TextBlock 
                    Text="Last Game:"
                        Grid.Column="1"
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    
-                   FontSize="22"
-                   Margin="0,148,0,0" Height="26" Width="130"/>
+                   FontSize="36"
+                   Margin="120,256,0,0" Height="50" Width="228"/>
 
 
 
 
             <Border x:Name="GridBoarder"
-                Grid.Row="1"
                     
                     Grid.Column="0"
                 BorderBrush="{StaticResource GridLineColor}"
                 BorderThickness="1.5"
+                HorizontalAlignment="Left"
                 
-                
-                RenderOptions.EdgeMode="Aliased" Height="584" Width="700" Margin="0,10,0,10"  >
+                RenderOptions.EdgeMode="Aliased" Height="1065" Width="1277"  >
 
                 <UniformGrid x:Name="GameGrid"
                            
                             
                          Background="{StaticResource GridBackgroundColor}"
-                         SnapsToDevicePixels="True"                       RenderOptions.BitmapScalingMode="HighQuality" />
+                         SnapsToDevicePixels="True"                       RenderOptions.BitmapScalingMode="HighQuality"  />
             </Border>
             <Border x:Name="Overlay"
                     
                     Grid.Column="0"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Background="{StaticResource OverlayCOloor}"
-                    Width="700"
-                    Height="584"
+                    Width="1277"
+                    Height="1065"
                    Margin="0,10,0,10" 
                     RenderOptions.EdgeMode="Aliased" Grid.Row="1">
                 <TextBlock x:Name="OverlayText"
                            Text="PRESS ANY KEY TO START"
-                           FontSize="26"
+                           FontSize="36"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            TextWrapping="Wrap"
@@ -197,33 +195,33 @@
 
 
             </Border>
-            
-                
+
+
             <TextBlock x:Name="HigestScoreTime"
                 Grid.Row="0"
                 Grid.Column="1"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Text="00:00:000"
-                FontSize="22"
-                Margin="0,357,0,0" Height="26" Width="122"/>
+                FontSize="36"
+                Margin="140,576,0,0" Height="45" Width="199"/>
             <TextBlock 
                 Text="Highest Score:"
                 Grid.Column="1"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                    
-                FontSize="22"
-                Margin="0,282,0,0" Height="26" Width="184"/>
-            <Image Grid.Column="1" HorizontalAlignment="Right" Height="157"
+                FontSize="36"
+                Margin="86,461,0,0" Height="49" Width="307"/>
+            <Image Grid.Column="1" HorizontalAlignment="Left" Height="340"
                   Source="Assets/Resources/wasd.png"
-                   Margin="0,422,67,0" VerticalAlignment="Top" Width="220" />
+                   Margin="10,729,0,0" VerticalAlignment="Top" Width="449" />
 
 
             <Border x:Name="StartMenu"
-                  
+               Visibility="Visible"
                     Grid.ColumnSpan="2"
-                    BorderBrush="Red"
+                    
                     BorderThickness="2"                    
                      Margin="-13,0,-13,0"
                     Background="{DynamicResource BackgroundColor}"
@@ -235,11 +233,19 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <Image
-                        Grid.ColumnSpan="3"
-                        gif:AnimationBehavior.SourceUri="Assets/UIElements/winky.gif">
+                    <!--<Image
+                        Grid.ColumnSpan="3" 
+                       gif:AnimationBehavior.SourceUri="/Assets/UIElements/intro.gif"/>-->
+                    <MediaElement 
+                       
+                        Name="intro"
+                      Visibility="Visible"
+                            
+                      Source="Assets\UIElements\intro.mp4" LoadedBehavior="Play" Volume="0" 
+                        MediaEnded="MediaElement_MediaEnded"
+                      />
 
-                    </Image>
+
                     <!--Menu for chossing grid size-->
                     <Grid x:Name="ChooseGridSize">
 
@@ -253,30 +259,30 @@
 
                         <TextBlock
                         Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="30"
-                        Height="30"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="36"
+                        Height="auto"
                         Width="auto"
-                        Text="LARGE" Margin="0,0,10,170"/>
+                        Text="LARGE" Margin="261,339,0,0"/>
 
                         <TextBlock
                         Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
                         FontSize="20"
                         Height="30"
                         Width="auto"
-                        Text="75x90" Margin="0,0,10,-265"/>
+                        Text="75x90" Margin="285,0,0,304"/>
 
                         <Image
                         Grid.Column="2"
-                        Width="200"
-                        HorizontalAlignment="Left"
+                        Width="400"
+                        HorizontalAlignment="Center"
                         RenderOptions.BitmapScalingMode="HighQuality"
                         RenderOptions.EdgeMode="Aliased"
                         Source="Assets/UIElements/LargeGameGrid.png"
-                        Margin="70,54,0,0">
+                        Margin="0,54,0,0">
 
                         </Image>
 
@@ -284,55 +290,54 @@
                         <TextBlock
                         Grid.Column="1"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="30"
-                        Height="30"
+                        VerticalAlignment="Top"
+                        FontSize="36"
+                        Height="auto"
                         Width="auto"
-                        Text="MEDIUM" Margin="0,0,10,170"/>
+                        Text="MEDIUM" Margin="0,330,0,0"/>
 
                         <TextBlock
                         Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
                         FontSize="20"
                         Height="30"
                         Width="auto"
-                        Text="30x36" Margin="0,0,10,-265"/>
+                        Text="30x36" Margin="285,0,0,304"/>
 
                         <Image
                         Grid.Column="1"
-                        Width="200"
-                        HorizontalAlignment="Left"
+                        Width="400"
+                        HorizontalAlignment="Center"
                         RenderOptions.BitmapScalingMode="HighQuality"
                         RenderOptions.EdgeMode="Aliased"
-                        Source="Assets/UIElements/MediumGameGrid.png" Margin="70,54,0,0">
+                        Source="Assets/UIElements/MediumGameGrid.png" Margin="0,54,0,0">
 
                         </Image>
 
                         <TextBlock
                         Grid.Column="0"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="30"
-                        Height="30"
+                        VerticalAlignment="Top"
+                        FontSize="36"
+                        Height="auto"
                         Width="auto"
-                        Text="SMALL" Margin="0,0,10,170"/>
+                        Text="SMALL" Margin="0,330,0,0"/>
 
                         <TextBlock
-                        Grid.Column="0"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Top"
                         FontSize="20"
                         Height="30"
                         Width="auto"
-                        Text="15x18" Margin="0,0,10,-265"/>
+                        Text="15x18" Margin="0,750,0,0"/>
 
                         <Image
                         Grid.Column="0"
-                        Width="200"
-                        HorizontalAlignment="Left"
+                        Width="400"
+                        HorizontalAlignment="Center"
                         
-                        Source="Assets/UIElements/SmallGameGrid.png" Margin="70,54,0,0">
+                        Source="Assets/UIElements/SmallGameGrid.png" Margin="0,54,0,0">
 
                         </Image>
 
@@ -439,13 +444,12 @@
                             </Button.Style>
                         </Button>
                         <TextBlock
-                        Grid.ColumnSpan="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
-                        FontSize="30"
-                        Height="30"
+                        FontSize="50"
+                        Height="auto"
                         Width="auto"
-                        Text="CHOOSE GRID SIZE:" Margin="0,10,0,0"/>
+                        Text="CHOOSE GRID SIZE:" Margin="0,50,0,0" Grid.Column="1"/>
 
                     </Grid>
 
@@ -473,11 +477,13 @@
                         <TextBlock
                         Grid.Column="2"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
+                            VerticalAlignment="Center"
                         FontSize="20"
-                        Height="30"
-                        Width="auto"
-                        Text="75x90" Margin="0,0,10,-265"/>
+                        Height="auto"
+                        Width="310"
+                            TextWrapping="Wrap"
+                        Text="Very fast movement speed, snake speed DOES increase over time significantly"
+                            TextAlignment="Center"/>
 
 
 
@@ -486,8 +492,8 @@
                         Grid.Column="1"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontSize="30"
-                        Height="30"
+                        FontSize="36"
+                        Height="auto"
                         Width="auto"
                         Text="MEDIUM" Margin="0,0,10,170"/>
 
@@ -496,9 +502,11 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontSize="20"
-                        Height="30"
-                        Width="auto"
-                        Text="30x36" Margin="0,0,10,-265"/>
+                        Height="auto"
+                        Width="270"
+                            TextWrapping="Wrap"
+                        Text="Medium movement speed, snake speed DOES increase over time"
+                            TextAlignment="Center"/>
 
 
 
@@ -516,9 +524,10 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontSize="20"
-                        Height="30"
-                        Width="auto"
-                        Text="15x18" Margin="0,0,10,-265"/>
+                        Height="auto"
+                        Width="250"
+                            TextWrapping="Wrap"
+                        Text="Slow movement speed, snake speed does NOT increase" TextAlignment="Center" />
 
 
 
@@ -624,13 +633,12 @@
                             </Button.Style>
                         </Button>
                         <TextBlock
-                        Grid.ColumnSpan="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
-                        FontSize="30"
-                        Height="30"
+                        FontSize="50"
+                        Height="auto"
                         Width="auto"
-                        Text="CHOOSE DIFFICULTY:" Margin="0,10,0,0"/>
+                        Text="CHOOSE DIFFICULTY:" Margin="0,50,0,0" Grid.Column="1"/>
 
                     </Grid>
                 </Grid>
