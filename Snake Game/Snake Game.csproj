@@ -18,8 +18,10 @@
     <None Remove="Assets\icon.ico" />
     <None Remove="Assets\Resources\wasd.png" />
     <None Remove="Assets\Resources\winky.gif" />
+    <None Remove="Assets\UIElements\intro.mp4" />
     <None Remove="Assets\UIElements\LargeGameGrid.png" />
     <None Remove="Assets\UIElements\MediumGameGrid.png" />
+    <None Remove="Assets\UIElements\Screenshot.png" />
     <None Remove="Assets\UIElements\SmallGameGrid.png" />
   </ItemGroup>
 
@@ -33,14 +35,14 @@
     <Resource Include="Assets\Resources\Head.png" />
     <Resource Include="Assets\Resources\icon.ico" />
     <Resource Include="Assets\Resources\wasd.png" />
+    <Content Include="Assets\UIElements\intro.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Assets\UIElements\LargeGameGrid.png" />
     <Resource Include="Assets\UIElements\MediumGameGrid.png" />
+    <Resource Include="Assets\UIElements\Screenshot.png" />
     <Resource Include="Assets\UIElements\SmallGameGrid.png" />
     <Resource Include="Assets\UIElements\winky.gif" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="XamlAnimatedGif" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

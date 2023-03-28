@@ -19,21 +19,24 @@ namespace Snake_Game.Core.Engine
 
     public class Engine : GridSize, IEngine
     {
-        Image[,] gridImages;
-        GameState gamestate;
+        DirectionState direction = DirectionState.Right;
+        GameDifficulty difficulty;
         TimeOnly gametime;
         TimeSpan timespan;
-        DirectionState direction = DirectionState.Right;
-        MainWindow main = Application.Current.Windows[0] as MainWindow;
+        MainWindow main;
+        GameState gamestate;
         Dictionary<GridState, ImageSource> states;
-        DispatcherTimer clock = new DispatcherTimer();
-        DispatcherTimer rotator = new DispatcherTimer();
-        GameModesScore allGamesScores;
+        DispatcherTimer clock;
+        DispatcherTimer rotator;
+        GameModesScore allGamesScoresData;
         GameScore currentHighScoreData;
-        GameDifficulty difficulty;
+        Image[,] gridImages;
 
         public Engine(int gridRows, int gridCols, TimeSpan gameSpeed, GameDifficulty difficulty) : base(gridRows, gridCols)
         {
+            this.difficulty = difficulty;
+            timespan = gameSpeed;
+            main = Application.Current.Windows[0] as MainWindow;
             gamestate = new GameState(gridRows, gridCols);
             states = new Dictionary<GridState, ImageSource>()
             {
@@ -41,23 +44,17 @@ namespace Snake_Game.Core.Engine
                 {GridState.Snake, ImageLoader.Body },
                 {GridState.Food, ImageLoader.Food },
             };
-            timespan = gameSpeed;
+            clock = new DispatcherTimer();
+            rotator = new DispatcherTimer();
+            allGamesScoresData = Serializator.Load();
+            currentHighScoreData = allGamesScoresData.GetHighestScore(GridRows * GridCols, difficulty);
 
             gridImages = SetUpGrid();
+            WriteHighScoreData();
             DrawEmptyGrid();
 
-            this.difficulty = difficulty;
-            allGamesScores = Serializator.Load();
-            currentHighScoreData = allGamesScores.GetHighestScore(GridRows * GridCols, difficulty);
-            WriteHighScoreData();
-
-
         }
-        private void WriteHighScoreData()
-        {
-            main.HighestScore.Text = "SCORE " + currentHighScoreData.Score;
-            main.HigestScoreTime.Text = currentHighScoreData.Time;
-        }
+
         private void TickEvent(object sender, EventArgs e)
         {
 
@@ -70,104 +67,74 @@ namespace Snake_Game.Core.Engine
                 main.ScoreBlock.Text = "SCORE " + gamestate.Score.ToString();
                 gametime = gametime.Add(timespan);
                 main.TimeBlock.Text = String.Format("{0:00}:{1:00}:{2:000}", gametime.Minute, gametime.Second, gametime.Millisecond);
+
                 Draw();
                 RotateUIBorderCurrent();
-
-                //IncreaseGameSpeed(); ->TODO fix
-
-
+                
+                //IncreaseGameSpeed(); -> TODO
             }
         }
-
         public async void StartGame()
         {
-            rotator.Stop();
-            rotator.Tick -= new EventHandler(HighScoreBlockTickEvent);
-            rotator.Tick -= new EventHandler(LastScoreBlockTickEvent);
+            StopRotator();
             await CountDown();
             main.Overlay.Visibility = Visibility.Hidden;
+            clock.Interval = timespan;
+            clock.Tick += new EventHandler(TickEvent);
             clock.Start();
             gametime = new TimeOnly();
 
-            StopRotator();
         }
-        private void StopRotator()
-        {
-            clock.Interval = timespan;
-            clock.Tick += new EventHandler(TickEvent);
-            main.HighestScore.Visibility = Visibility.Visible;
-            main.HighestScoreBorder.Visibility = Visibility.Visible;
-            main.HigestScoreTime.Visibility = Visibility.Visible;
-        }
-        private void HighScoreBlockTickEvent(object sender, EventArgs e)
-        {
 
-            if (main.rotateHighScoreBorder.Angle>=0&& main.rotateHighScoreBorder.Angle<50)
-            {
-                main.HighestScore.Visibility = Visibility.Hidden;
-                main.HighestScoreBorder.Visibility = Visibility.Hidden;
-                main.HigestScoreTime.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                main.HighestScore.Visibility = Visibility.Visible;
-                main.HighestScoreBorder.Visibility = Visibility.Visible;
-                main.HigestScoreTime.Visibility = Visibility.Visible;
-            }
-
-            if (main.rotateHighScoreBorder.Angle>=350)           
-                main.rotateHighScoreBorder.Angle = 0;
-
-            main.rotateHighScoreBorder.Angle += 10;
-        }
-        private void LastScoreBlockTickEvent(object sender, EventArgs e)
-        {
-
-            if (main.LastScoreBorderRotate.Angle >= 350)
-                main.LastScoreBorderRotate.Angle = 0;
-
-            main.LastScoreBorderRotate.Angle += 5;
-        }
         public async void StopGame()
         {
-            rotator.Start();
-            rotator.Interval = new TimeSpan(0, 0, 0, 0, 10);
-            if (gamestate.Score > currentHighScoreData.Score)
-            {
-                currentHighScoreData = new GameScore(gamestate.Score, gametime.ToString("mm:ss:fff"), GridRows * GridCols, difficulty);
-                allGamesScores.UpdateHighScore(currentHighScoreData);
-                Serializator.Save(allGamesScores);
-                WriteHighScoreData();
-                rotator.Tick +=new EventHandler(HighScoreBlockTickEvent);
-            }
-            else
-            {
-                rotator.Tick += new EventHandler(LastScoreBlockTickEvent);
-            }
-            
+
+
             main.ScoreBlock.Text = "SCORE 0";
             main.TimeBlock.Text = "00:00:000";
 
-            main.LastGameScoreBlock.Text = "SCORE " + gamestate.Score.ToString();
-            main.LastTimeBlock.Text = gametime.ToString("mm:ss:fff");
+
 
             clock.Stop();
             clock.Tick -= new EventHandler(TickEvent);
 
             direction = DirectionState.Right;
             await DrawDeadSnake();
-            gamestate = new GameState(GridRows, GridCols);
+
             await Task.Delay(2000);
 
             DrawEmptyGrid();
             main.Overlay.Visibility = Visibility.Visible;
+
+            rotator.Start();
+            rotator.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            if (gamestate.Score > currentHighScoreData.Score)
+            {
+                currentHighScoreData = new GameScore(gamestate.Score, gametime.ToString("mm:ss:fff"), GridRows * GridCols, difficulty);
+                allGamesScoresData.UpdateHighScore(currentHighScoreData);
+                Serializator.Save(allGamesScoresData);
+                WriteHighScoreData();
+                rotator.Tick += new EventHandler(HighScoreBlockTickEvent);
+            }
+            else
+            {
+                rotator.Tick += new EventHandler(LastScoreBlockTickEvent);
+            }
+            main.LastGameScoreBlock.Text = "SCORE " + gamestate.Score.ToString();
+            main.LastTimeBlock.Text = gametime.ToString("mm:ss:fff");
+            gamestate = new GameState(GridRows, GridCols);
         }
 
+        public void Move(DirectionState dir) => direction = dir;
 
-       
-        public void Move(DirectionState dir)
+        private void IncreaseGameSpeed()
         {
-            direction = dir;
+            if (difficulty > 0)
+                if (gametime.Second % 3 == 0 && gametime.Second > 0)
+                {
+                    clock.Interval -= new TimeSpan(0, 0, 0, 0, 10);
+
+                }
         }
 
         private void Draw()
@@ -185,7 +152,7 @@ namespace Snake_Game.Core.Engine
 
         private void DrawHead()
         {
-            var head = gamestate.GetSnake().First();
+            var head = gamestate.GetCurrentStateOfSnake.First();
             Image image = gridImages[head.Row, head.Col];
 
             switch (gamestate.LastDirection)
@@ -212,7 +179,7 @@ namespace Snake_Game.Core.Engine
         private async Task DrawDeadSnake()
         {
             Draw();
-            foreach (var item in gamestate.GetSnake())
+            foreach (var item in gamestate.GetCurrentStateOfSnake)
             {
                 gridImages[item.Row, item.Col].Source = ImageLoader.DeadBody;
                 await Task.Delay(20);
@@ -229,17 +196,15 @@ namespace Snake_Game.Core.Engine
                 }
             }
         }
-        private void IncreaseGameSpeed()
+        private void WriteHighScoreData()
         {
-            if (gamestate.Score % 10 == 0)
-            {
-                TimeSpan increseSpeed = timespan - new TimeSpan(0, 0, 0, 0, 10);
-                clock.Interval = timespan;
-            }
+            main.HighestScore.Text = "SCORE " + currentHighScoreData.Score;
+            main.HigestScoreTime.Text = currentHighScoreData.Time;
         }
+
         private void RotateUIBorderCurrent()
         {
-            main.RotateBoarder.Angle +=3;
+            main.RotateBoarder.Angle += 3;
 
             if (main.RotateBoarder.Angle >= 360)
             {
@@ -257,6 +222,48 @@ namespace Snake_Game.Core.Engine
             }
 
             main.OverlayText.Text = "PRESS ANY KEY TO START";
+        }
+
+        private void HighScoreBlockTickEvent(object sender, EventArgs e)
+        {
+
+            if (main.rotateHighScoreBorder.Angle >= 0 && main.rotateHighScoreBorder.Angle < 100)
+            {
+                main.HighestScore.Visibility = Visibility.Hidden;
+                main.HighestScoreBorder.Visibility = Visibility.Hidden;
+                main.HigestScoreTime.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                main.HighestScore.Visibility = Visibility.Visible;
+                main.HighestScoreBorder.Visibility = Visibility.Visible;
+                main.HigestScoreTime.Visibility = Visibility.Visible;
+            }
+
+            if (main.rotateHighScoreBorder.Angle >= 360)
+                main.rotateHighScoreBorder.Angle = 0;
+
+            main.rotateHighScoreBorder.Angle += 10;
+        }
+
+        private void LastScoreBlockTickEvent(object sender, EventArgs e)
+        {
+
+            if (main.LastScoreBorderRotate.Angle >= 360)
+                main.LastScoreBorderRotate.Angle = 0;
+
+            main.LastScoreBorderRotate.Angle += 5;
+        }
+
+        private void StopRotator()
+        {
+            rotator.Stop();
+            rotator.Tick -= new EventHandler(HighScoreBlockTickEvent);
+            rotator.Tick -= new EventHandler(LastScoreBlockTickEvent);
+
+            main.HighestScore.Visibility = Visibility.Visible;
+            main.HighestScoreBorder.Visibility = Visibility.Visible;
+            main.HigestScoreTime.Visibility = Visibility.Visible;
         }
 
         private Image[,] SetUpGrid()

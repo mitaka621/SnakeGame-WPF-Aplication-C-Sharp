@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace Snake_Game.GameLogic
 {
-    
-    public class GameState:Snake
+
+    public class GameState :GridSize
     {
+        Snake snake;
         GridState[,] arr;
         DirectionState lastDirection = DirectionState.Right;
         GenerateFood food;
@@ -23,11 +24,12 @@ namespace Snake_Game.GameLogic
 
         public GameState(int gridRows, int gridCols) : base(gridRows, gridCols)
         {
-            arr = new GridState[GridRows, GridCols];           
+            snake = new Snake(gridRows,gridCols);
+            arr = new GridState[GridRows, GridCols];
             food = new GenerateFood(GridRows, GridCols);
             Score = 0;
         }
-        public DirectionState LastDirection { get=>lastDirection; }
+        public DirectionState LastDirection { get => lastDirection; }
         public int Score { get; private set; }
         public GridState[,] GetState()
         {
@@ -36,9 +38,9 @@ namespace Snake_Game.GameLogic
             DrawFoodInInternalArr();
             return arr;
         }
-        
+        public LinkedList<Head> GetCurrentStateOfSnake => snake.GetSnake();
 
-        public bool IsDirectionValid(DirectionState lastDirection, DirectionState newDirection)
+        private bool IsDirectionValid(DirectionState lastDirection, DirectionState newDirection)
         => (lastDirection == DirectionState.Left && newDirection == DirectionState.Right)
          || (lastDirection == DirectionState.Right && newDirection == DirectionState.Left)
          || (lastDirection == DirectionState.Up && newDirection == DirectionState.Down)
@@ -53,14 +55,18 @@ namespace Snake_Game.GameLogic
             else
                 lastDirection = direction;
 
-            if (!Move(direction, shouldExtend))
-                gameRunning = false;
-            Head head = snake.First();
+            Head nextPositionHead = snake.GetSnake().First().Return().MoveNext(direction);
+            if (OutOfBounds(nextPositionHead))
+                return false;
+
+            snake.Move(direction, shouldExtend);
+
+            Head head = snake.GetSnake().First();
             switch (arr[head.Row, head.Col])
             {
                 case GridState.Food:
-                    EatFood(snake.First());
-                    shouldExtend=true;
+                    EatFood(snake.GetSnake().First());
+                    shouldExtend = true;
                     break;
                 case GridState.Snake:
                     gameRunning = false;
@@ -73,6 +79,13 @@ namespace Snake_Game.GameLogic
             return gameRunning;
 
         }
+
+        private bool OutOfBounds(Head pos) =>
+          pos.Row < 0 ||
+          pos.Col < 0 ||
+          pos.Row >= GridRows ||
+          pos.Col >= GridCols;
+
         private void EatFood(Head headPos)
         {
 
@@ -83,7 +96,7 @@ namespace Snake_Game.GameLogic
         private void DrawSnakeInInternalArr()
         {
 
-            foreach (var item in snake)
+            foreach (var item in snake.GetSnake())
             {
                 arr[item.Row, item.Col] = GridState.Snake;
             }

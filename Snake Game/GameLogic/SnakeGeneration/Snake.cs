@@ -22,29 +22,16 @@ namespace Snake_Game.Logic
                 new Head(gridRows/2,1)
             });
         }
-       
+
         public LinkedList<Head> GetSnake() => snake;
-        
-        protected bool Move(DirectionState state,bool extend=false)
+
+        public void Move(DirectionState state, bool extend = false)
         {
-            Head nextHead = snake.First().Return().MoveNext(state);
-            
-            if (IsHeadValid(nextHead))
-            {
-                if (!extend)
-                    snake.RemoveLast();
-                snake.AddFirst(nextHead);
-               
-                return true;
-            }
-            
-            return false;
+            if (!extend)
+                snake.RemoveLast();
+            snake.AddFirst(snake.First().Return().MoveNext(state));
         }
-        
-        private bool IsHeadValid(Head pos)=>
-            pos.Row>=0&&
-            pos.Col>=0&&
-            pos.Row< GridRows&&
-            pos.Col<GridCols;
+
+
     }
 }
