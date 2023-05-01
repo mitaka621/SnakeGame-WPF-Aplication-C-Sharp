@@ -17,7 +17,6 @@
     <None Remove="Assets\Head.png" />
     <None Remove="Assets\icon.ico" />
     <None Remove="Assets\Resources\wasd.png" />
-    <None Remove="Assets\Resources\winky.gif" />
     <None Remove="Assets\UIElements\intro.mp4" />
     <None Remove="Assets\UIElements\LargeGameGrid.png" />
     <None Remove="Assets\UIElements\MediumGameGrid.png" />
@@ -42,7 +41,6 @@
     <Resource Include="Assets\UIElements\MediumGameGrid.png" />
     <Resource Include="Assets\UIElements\Screenshot.png" />
     <Resource Include="Assets\UIElements\SmallGameGrid.png" />
-    <Resource Include="Assets\UIElements\winky.gif" />
   </ItemGroup>
 
 </Project>
