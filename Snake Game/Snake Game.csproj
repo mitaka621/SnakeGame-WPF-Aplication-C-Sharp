@@ -20,7 +20,6 @@
     <None Remove="Assets\UIElements\intro.mp4" />
     <None Remove="Assets\UIElements\LargeGameGrid.png" />
     <None Remove="Assets\UIElements\MediumGameGrid.png" />
-    <None Remove="Assets\UIElements\Screenshot.png" />
     <None Remove="Assets\UIElements\SmallGameGrid.png" />
   </ItemGroup>
 
@@ -39,7 +38,6 @@
     </Content>
     <Resource Include="Assets\UIElements\LargeGameGrid.png" />
     <Resource Include="Assets\UIElements\MediumGameGrid.png" />
-    <Resource Include="Assets\UIElements\Screenshot.png" />
     <Resource Include="Assets\UIElements\SmallGameGrid.png" />
   </ItemGroup>
 
